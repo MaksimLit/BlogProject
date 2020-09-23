@@ -26,7 +26,7 @@ class Credentials
      * Credentials constructor.
      * @param string|null $username
      */
-    public function __construct(?string $username)
+    public function __construct(?string $username = null)
     {
         $this->username = $username;
     }
