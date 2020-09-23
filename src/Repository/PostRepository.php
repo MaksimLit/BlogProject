@@ -18,4 +18,14 @@ class PostRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Post::class);
     }
+
+    public function getAllPosts(): array
+    {
+        return $this->createQueryBuilder("p")
+            ->addSelect("c")
+            ->join("p.comments", "c")
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
