@@ -38,6 +38,15 @@ class Post
     private $content;
 
     /**
+     * Post constructor.
+     * @throws \Exception
+     */
+    public function __construct()
+    {
+        $this->publishedAt = new \DateTimeImmutable();
+    }
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
