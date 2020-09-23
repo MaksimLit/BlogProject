@@ -6,5 +6,6 @@
         <h2>{{ post.title }}</h2>
         <small>{{ post.publishedAt|date("d/m/y") }}</small>
         <p>{{ post.content }}</p>
+        <a href="{{ path("blog_read", { id: post.id }) }}">Read</a>
     {% endfor %}
 {% endblock %}
