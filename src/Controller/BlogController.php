@@ -24,7 +24,7 @@ class BlogController extends AbstractController
     public function index(): Response
     {
         $posts = $this->getDoctrine()->getRepository(Post::class)->getAllPosts();
-        return $this->render("index.html.twig", [
+        return $this->render("blog/index.html.twig", [
             "posts" => $posts
         ]);
     }
@@ -40,7 +40,13 @@ class BlogController extends AbstractController
         $comment = new Comment();
         $comment->setPost($post);
 
-        $form = $this->createForm(CommentType::class, $comment)->handleRequest($request);
+        if ($this->isGranted("ROLE_USER")) {
+            $comment->setUser($this->getUser());
+        }
+
+        $form = $this->createForm(CommentType::class, $comment, [
+            "validation_groups" => $this->isGranted("ROLE_USER") ? "Default" : ["Default", "anonymous"]
+        ])->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->persist($comment);
@@ -48,7 +54,7 @@ class BlogController extends AbstractController
             return $this->redirectToRoute("blog_read", ["id" => $post->getId()]);
         }
 
-        return $this->render("read.html.twig", [
+        return $this->render("blog/read.html.twig", [
             "post" => $post,
             "form" => $form->createView()
         ]);

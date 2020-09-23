@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
@@ -18,14 +19,18 @@ class Comment
     private $id;
 
     /**
-     * @var string
-     * @ORM\Column
+     * @var string|null
+     * @ORM\Column(nullable=true)
+     * @Assert\NotBlank(groups={"anonymous"})
+     * @Assert\Length(min = 2, groups={"anonymous"})
      */
-    private $author;
+    private $author = null;
 
     /**
      * @var string
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
+     * @Assert\Length(min = 5)
      */
     private $content;
 
@@ -40,6 +45,12 @@ class Comment
      * @ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
      */
     private $post;
+
+    /**
+     * @var null|User
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
+     */
+    private $user = null;
 
     /**
      * Comment constructor.
@@ -67,11 +78,27 @@ class Comment
     }
 
     /**
-     * @param string $author
+     * @param string|null $author
      */
-    public function setAuthor(string $author): void
+    public function setAuthor(?string $author): void
     {
         $this->author = $author;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User|null $user
+     */
+    public function setUser(?User $user): void
+    {
+        $this->user = $user;
     }
 
     /**
