@@ -39,12 +39,15 @@ class BlogController extends AbstractController
     {
         $comment = new Comment();
         $comment->setPost($post);
+
         $form = $this->createForm(CommentType::class, $comment)->handleRequest($request);
+
         if($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->persist($comment);
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute("blog_read", ["id" => $post->getId()]);
         }
+
         return $this->render("read.html.twig", [
             "post" => $post,
             "form" => $form->createView()
