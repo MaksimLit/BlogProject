@@ -34,7 +34,7 @@ class CommentType extends AbstractType
             }
 
             $event->getForm()->add("author", TextType::class, [
-                "label" => "Pseudo :"
+                "label" => "Nickname :"
             ]);
         });
     }

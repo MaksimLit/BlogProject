@@ -45,7 +45,7 @@ class UserType extends AbstractType
                 ]
             ])
             ->add('pseudo', TextType::class, [
-                'label' => 'Pseudo :'
+                'label' => 'Nickname :'
             ])
         ;
     }
