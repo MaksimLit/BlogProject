@@ -9,11 +9,11 @@
         {{ form_row(form.author) }}
     {% endif %}
     {{ form_row(form.content) }}
-    <button type="submit">Add a comment</button>
+    <button class="btn btn-primary" type="submit">Add a comment</button><br><br>
     {{ form_end(form) }}
-    <ul>
+    <ul class="list-group">
         {% for comment in post.comments %}
-            <li>{{ comment.user is not null ? comment.user.pseudo : comment.author }} : {{ comment.content }}</li>
+            <li class="list-group-item">{{ comment.user is not null ? comment.user.pseudo : comment.author }} : {{ comment.content }}</li>
         {% endfor %}
     </ul>
 {% endblock %}
