@@ -13,7 +13,12 @@
     {{ form_end(form) }}
     <ul class="list-group">
         {% for comment in post.comments %}
-            <li class="list-group-item">{{ comment.user is not null ? comment.user.pseudo : comment.author }} : {{ comment.content }}</li>
+            <li class="list-group-item">
+                {{ comment.user is not null ? comment.user.pseudo : comment.author }} : {{ comment.content }}
+                {% if is_granted('ROLE_ADMIN') orclear comment.user is not null %}
+                    <i onclick="removeComment({{ comment.id }})" class="fas fa fa-minus-circle"></i>
+                {% endif %}
+            </li>
         {% endfor %}
     </ul>
 {% endblock %}

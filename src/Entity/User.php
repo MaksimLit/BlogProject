@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -50,12 +52,19 @@ class User implements UserInterface
     private $registeredAt;
 
     /**
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="user")
+     */
+    private $comments;
+
+    /**
      * User constructor.
      * @throws \Exception
      */
     public function __construct()
     {
         $this->registeredAt = new DateTimeImmutable();
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -173,5 +182,13 @@ class User implements UserInterface
      */
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
     }
 }
