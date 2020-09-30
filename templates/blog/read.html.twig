@@ -16,7 +16,7 @@
             <li class="list-group-item">
                 {{ comment.user is not null ? comment.user.pseudo : comment.author }} : {{ comment.content }}
                 {% if is_granted('ROLE_ADMIN') or comment.user is not null %}
-                    <i onclick="removeComment({{ comment.id }})" class="fas fa fa-minus-circle"></i>
+                    <i onclick="removeComment(this, {{ comment.id }})" class="fas fa fa-minus-circle"></i>
                 {% endif %}
             </li>
         {% endfor %}
